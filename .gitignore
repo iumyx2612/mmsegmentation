@@ -116,7 +116,6 @@ data
 work_dirs/
 mmseg/.mim
 main.py
-test.py
 
 # Pytorch
 *.pth
