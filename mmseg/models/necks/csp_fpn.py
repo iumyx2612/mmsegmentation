@@ -88,7 +88,7 @@ class CSPFPN(BaseModule):
                 type='DCN',
                 deform_groups=1
             ),
-            norm_cfg=norm_cfg,
+            norm_cfg=dict(type='GN', num_groups=32, requires_grad=True),
             act_cfg=act_cfg,
             inplace=False
         )
@@ -101,7 +101,7 @@ class CSPFPN(BaseModule):
                 type='DCN',
                 deform_groups=1
             ),
-            norm_cfg=norm_cfg,
+            norm_cfg=dict(type='GN', num_groups=32, requires_grad=True),
             act_cfg=act_cfg,
             inplace=False
         )
