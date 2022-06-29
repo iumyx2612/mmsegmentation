@@ -37,7 +37,7 @@ class BAFCNHead(FCNHead):
             self.mid_channels,
             kernel_size=1,
             padding=0,
-            dilation=0,
+            dilation=dilation,
             conv_cfg=self.conv_cfg,
             norm_cfg=self.norm_cfg,
             act_cfg=self.act_cfg
