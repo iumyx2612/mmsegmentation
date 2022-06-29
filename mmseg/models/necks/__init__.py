@@ -8,8 +8,9 @@ from .multilevel_neck import MultiLevelNeck
 from .pafpn import PAFPN
 from .csp_fpn import CSPFPN
 from .sppf import SPPF
+from .fpn_sppf import FPNSPPF
 
 __all__ = [
     'FPN', 'MultiLevelNeck', 'MLANeck', 'ICNeck', 'JPU', 'Feature2Pyramid',
-    'PAFPN', 'CSPFPN', 'SPPF'
+    'PAFPN', 'CSPFPN', 'SPPF', 'FPNSPPF'
 ]
