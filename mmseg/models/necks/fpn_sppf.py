@@ -109,7 +109,7 @@ class FPNSPPF(BaseModule):
                 self.fpn_convs.append(extra_fpn_conv)
 
         # add SPPF for the last scale
-        self.high_sppf = SPPFModule(
+        self.sppf = SPPFModule(
             in_channels=out_channels,
             out_channels=out_channels,
             kernel=kernel
@@ -152,7 +152,7 @@ class FPNSPPF(BaseModule):
         ]
 
         # extra part: SPPF on last out and first out
-        outs[-1] = self.high_sppf(outs[-1])
+        outs[-1] = self.sppf(outs[-1])
         if self.allow_low_sppf:
             outs[0] = self.low_sppf(outs[0])
 
