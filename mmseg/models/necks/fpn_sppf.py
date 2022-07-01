@@ -14,6 +14,7 @@ class FPNSPPF(BaseModule):
                  in_channels,
                  out_channels,
                  num_outs,
+                 allow_low_sppf=False,
                  kernel=5,
                  start_level=0,
                  end_level=-1,
@@ -31,6 +32,7 @@ class FPNSPPF(BaseModule):
         assert isinstance(in_channels, list)
         self.in_channels = in_channels
         self.out_channels = out_channels
+        self.allow_low_sppf = allow_low_sppf
         self.num_ins = len(in_channels)
         self.num_outs = num_outs
         self.relu_before_extra_convs = relu_before_extra_convs
@@ -107,11 +109,18 @@ class FPNSPPF(BaseModule):
                 self.fpn_convs.append(extra_fpn_conv)
 
         # add SPPF for the last scale
-        self.sppf = SPPFModule(
+        self.high_sppf = SPPFModule(
             in_channels=out_channels,
             out_channels=out_channels,
             kernel=kernel
         )
+        # add SPPF for the first scale
+        if self.allow_low_sppf:
+            self.low_sppf = SPPFModule(
+                in_channels=out_channels,
+                out_channels=out_channels,
+                kernel=kernel
+            )
 
     @auto_fp16()
     def forward(self, inputs):
@@ -143,8 +152,9 @@ class FPNSPPF(BaseModule):
         ]
 
         # extra part: SPPF on last out and first out
-        outs[-1] = self.sppf(outs[-1])
-        outs[0] = self.sppf(outs[0])
+        outs[-1] = self.high_sppf(outs[-1])
+        if self.allow_low_sppf:
+            outs[0] = self.low_sppf(outs[0])
 
         # part 2: add extra levels
         if self.num_outs > len(outs):
