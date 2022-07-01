@@ -142,8 +142,9 @@ class FPNSPPF(BaseModule):
             self.fpn_convs[i](laterals[i]) for i in range(used_backbone_levels)
         ]
 
-        # extra part: SPPF on last outs
+        # extra part: SPPF on last out and first out
         outs[-1] = self.sppf(outs[-1])
+        outs[0] = self.sppf(outs[0])
 
         # part 2: add extra levels
         if self.num_outs > len(outs):
