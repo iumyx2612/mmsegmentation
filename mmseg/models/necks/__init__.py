@@ -9,8 +9,9 @@ from .pafpn import PAFPN
 from .csp_fpn import CSPFPN
 from .sppf import SPPF
 from .fpn_sppf import FPNSPPF
+from .fpn_sppf_l import FPNSPPF_L
 
 __all__ = [
     'FPN', 'MultiLevelNeck', 'MLANeck', 'ICNeck', 'JPU', 'Feature2Pyramid',
-    'PAFPN', 'CSPFPN', 'SPPF', 'FPNSPPF'
+    'PAFPN', 'CSPFPN', 'SPPF', 'FPNSPPF', 'FPNSPPF_L'
 ]
