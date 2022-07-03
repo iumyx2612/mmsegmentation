@@ -19,15 +19,16 @@ class EAttnFCNHead(FCNHead):
         self.num_convs = num_convs
         self.concat_input = concat_input
         self.kernel_size = kernel_size
+        groups = len(kwargs["in_channels"])
         super(EAttnFCNHead, self).__init__(num_convs,
                                           kernel_size,
                                           concat_input,
                                           dilation,
                                           **kwargs)
-        total_in_channels = sum(self.in_channels)
+
         self.layer_attn = LayerAttention(
-            in_channels=total_in_channels,
-            groups=len(self.in_channels)
+            in_channels=self.in_channels,
+            groups=groups
         )
         self.attn = TripletAttention()
 
