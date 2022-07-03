@@ -28,9 +28,10 @@ class LayerAttention(nn.Module):
 
         x = x.view(b, self.groups, c // self.groups, h, w)
         weight = weight.view(b, self.groups, 1, 1, 1)
+        _x = x.clone()
         for group in range(self.groups):
-            x[:, group, :, :, :] = x[:, group, :, :, :] * weight[:, group, :, :, :]
+            _x[:, group] = x[:, group] * weight[:, group]
 
-        x = x.view(b, c, h, w)
+        _x = _x.view(b, c, h, w)
 
-        return x
+        return _x
