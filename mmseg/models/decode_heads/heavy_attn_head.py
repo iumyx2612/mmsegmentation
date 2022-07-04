@@ -72,8 +72,8 @@ class HeavyAttnHead(FCNHead):
     def _forward_feature(self, inputs):
         x = self._transform_inputs(inputs)
         x = self.layer_attn(x)
-        feats = self.convs(x)
-        x = self.attn(x)
+        x = self.convs(x)
+        feats = self.attn(x)
         if self.concat_input:
             feats = self.conv_cat(torch.cat([x, feats], dim=1))
         return feats
