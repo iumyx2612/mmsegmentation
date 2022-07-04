@@ -8,7 +8,7 @@ from .fcn_head import FCNHead
 
 
 @HEADS.register_module()
-class HeavyAttnHead2(FCNHead):
+class TripleAttnHead(FCNHead):
     def __init__(self,
                  num_convs=2,
                  kernel_size=3,
@@ -20,7 +20,7 @@ class HeavyAttnHead2(FCNHead):
         self.concat_input = concat_input
         self.kernel_size = kernel_size
         groups = len(kwargs["in_channels"])
-        super(HeavyAttnHead2, self).__init__(num_convs,
+        super(TripleAttnHead, self).__init__(num_convs,
                                           kernel_size,
                                           concat_input,
                                           dilation,
@@ -71,8 +71,9 @@ class HeavyAttnHead2(FCNHead):
 
     def _forward_feature(self, inputs):
         x = self._transform_inputs(inputs)
-        x = self.layer_attn(x)
-        x = self.attn(x)
+        x1 = self.layer_attn(x)
+        x2 = self.attn(x)
+        x = x1 * x2
         feats = self.convs(x)
         if self.concat_input:
             feats = self.conv_cat(torch.cat([x, feats], dim=1))

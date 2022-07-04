@@ -31,7 +31,7 @@ from .uper_head import UPerHead
 from .attn_fcn_head import AttnFCNHead
 from .eattn_fcn_head import EAttnFCNHead
 from .heavy_attn_head import HeavyAttnHead
-from .heavy_attn_head2 import HeavyAttnHead2
+from .triple_attn_head import TripleAttnHead
 
 __all__ = [
     'FCNHead', 'PSPHead', 'ASPPHead', 'PSAHead', 'NLHead', 'GCHead', 'CCHead',
@@ -41,5 +41,5 @@ __all__ = [
     'SETRMLAHead', 'DPTHead', 'SETRMLAHead', 'SegmenterMaskTransformerHead',
     'SegformerHead', 'ISAHead', 'STDCHead', 'IterativeDecodeHead',
     'KernelUpdateHead', 'KernelUpdator', 'AttnFCNHead', 'EAttnFCNHead',
-    'HeavyAttnHead', 'HeavyAttnHead2'
+    'HeavyAttnHead', 'TripleAttnHead'
 ]
