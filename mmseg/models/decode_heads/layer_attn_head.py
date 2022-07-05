@@ -8,19 +8,20 @@ from .fcn_head import FCNHead
 
 
 @HEADS.register_module()
-class HeavyAttnHead(FCNHead):
+class LayerAttnHead(FCNHead):
     def __init__(self,
                  num_convs=2,
                  kernel_size=3,
                  concat_input=True,
                  dilation=1,
+                 attn_act='sigmoid',
                  **kwargs):
         assert num_convs >= 0 and dilation > 0 and isinstance(dilation, int)
         self.num_convs = num_convs
         self.concat_input = concat_input
         self.kernel_size = kernel_size
         groups = len(kwargs["in_channels"])
-        super(HeavyAttnHead, self).__init__(num_convs,
+        super(LayerAttnHead, self).__init__(num_convs,
                                           kernel_size,
                                           concat_input,
                                           dilation,
@@ -28,7 +29,8 @@ class HeavyAttnHead(FCNHead):
 
         self.layer_attn = LayerAttention(
             in_channels=self.in_channels,
-            groups=groups
+            groups=groups,
+            act=attn_act
         )
         self.attn = TripletAttention()
 
@@ -72,8 +74,7 @@ class HeavyAttnHead(FCNHead):
     def _forward_feature(self, inputs):
         x = self._transform_inputs(inputs)
         x = self.layer_attn(x)
-        x = self.convs(x)
-        feats = self.attn(x)
+        feats = self.convs(x)
         if self.concat_input:
             feats = self.conv_cat(torch.cat([x, feats], dim=1))
         return feats

@@ -30,7 +30,7 @@ from .stdc_head import STDCHead
 from .uper_head import UPerHead
 from .attn_fcn_head import AttnFCNHead
 from .eattn_fcn_head import EAttnFCNHead
-from .heavy_attn_head import HeavyAttnHead
+from .layer_attn_head import HeavyAttnHead
 from .triple_attn_head import TripleAttnHead
 from .triple_attn_head_cat import TripleAttnHeadC
 

@@ -5,8 +5,10 @@ class LayerAttention(nn.Module):
     def __init__(self,
                  in_channels,
                  groups,
-                 la_down_rate=8):
+                 la_down_rate=8,
+                 act='sigmoid'):
         super(LayerAttention, self).__init__()
+        assert act in ['sigmoid', 'softmax'], "Activation for LayerAttention must be 'sigmoid' or 'softmax'"
         self.in_channels = in_channels
         self.groups = groups
         self.layer_attention = nn.Sequential(
@@ -17,7 +19,7 @@ class LayerAttention(nn.Module):
                 self.groups,
                 1
             ),
-            nn.Sigmoid()
+            nn.Sigmoid() if act == 'sigmoid' else nn.Softmax()
         )
 
     def forward(self, x):
