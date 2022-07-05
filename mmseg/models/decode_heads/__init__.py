@@ -30,7 +30,7 @@ from .stdc_head import STDCHead
 from .uper_head import UPerHead
 from .attn_fcn_head import AttnFCNHead
 from .eattn_fcn_head import EAttnFCNHead
-from .layer_attn_head import HeavyAttnHead
+from .layer_attn_head import LayerAttnHead
 from .triple_attn_head import TripleAttnHead
 from .triple_attn_head_cat import TripleAttnHeadC
 
@@ -42,5 +42,5 @@ __all__ = [
     'SETRMLAHead', 'DPTHead', 'SETRMLAHead', 'SegmenterMaskTransformerHead',
     'SegformerHead', 'ISAHead', 'STDCHead', 'IterativeDecodeHead',
     'KernelUpdateHead', 'KernelUpdator', 'AttnFCNHead', 'EAttnFCNHead',
-    'HeavyAttnHead', 'TripleAttnHead', 'TripleAttnHeadC'
+    'LayerAttnHead', 'TripleAttnHead', 'TripleAttnHeadC'
 ]
