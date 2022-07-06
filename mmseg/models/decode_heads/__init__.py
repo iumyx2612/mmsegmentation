@@ -33,6 +33,7 @@ from .eattn_fcn_head import EAttnFCNHead
 from .layer_attn_head import LayerAttnHead
 from .triple_attn_head import TripleAttnHead
 from .triple_attn_head_cat import TripleAttnHeadC
+from .double_branch_head import DoubleBranchHead
 
 __all__ = [
     'FCNHead', 'PSPHead', 'ASPPHead', 'PSAHead', 'NLHead', 'GCHead', 'CCHead',
@@ -42,5 +43,5 @@ __all__ = [
     'SETRMLAHead', 'DPTHead', 'SETRMLAHead', 'SegmenterMaskTransformerHead',
     'SegformerHead', 'ISAHead', 'STDCHead', 'IterativeDecodeHead',
     'KernelUpdateHead', 'KernelUpdator', 'AttnFCNHead', 'EAttnFCNHead',
-    'LayerAttnHead', 'TripleAttnHead', 'TripleAttnHeadC'
+    'LayerAttnHead', 'TripleAttnHead', 'TripleAttnHeadC', 'DoubleBranchHead'
 ]

@@ -19,7 +19,7 @@ class LayerAttention(nn.Module):
                 self.groups,
                 1
             ),
-            nn.Sigmoid() if act == 'sigmoid' else nn.Softmax()
+            nn.Sigmoid() if act == 'sigmoid' else nn.Softmax(dim=1) # channel softmax
         )
 
     def forward(self, x):

@@ -7,6 +7,7 @@ from mmseg.ops import resize
 from ..builder import HEADS
 from .decode_head import BaseDecodeHead
 from .psp_head import PPM
+from mmseg.models.utils import LayerAttention
 
 
 @HEADS.register_module()
@@ -21,10 +22,14 @@ class UPerHead(BaseDecodeHead):
             Module applied on the last feature. Default: (1, 2, 3, 6).
     """
 
-    def __init__(self, pool_scales=(1, 2, 3, 6), **kwargs):
+    def __init__(self,
+                 pool_scales=(1, 2, 3, 6),
+                 with_attn=False,
+                 **kwargs):
         super(UPerHead, self).__init__(
             input_transform='multiple_select', **kwargs)
         # PSP Module
+        self.with_attn = with_attn
         self.psp_modules = PPM(
             pool_scales,
             self.in_channels[-1],
@@ -73,6 +78,12 @@ class UPerHead(BaseDecodeHead):
             conv_cfg=self.conv_cfg,
             norm_cfg=self.norm_cfg,
             act_cfg=self.act_cfg)
+
+        if self.with_attn:
+            self.layer_attn = LayerAttention(
+                self.channels * len(self.in_channels),
+                groups=len(self.in_channels)
+            )
 
     def psp_forward(self, inputs):
         """Forward function of PSP module."""
@@ -130,6 +141,9 @@ class UPerHead(BaseDecodeHead):
                 mode='bilinear',
                 align_corners=self.align_corners)
         fpn_outs = torch.cat(fpn_outs, dim=1)
+        ## attention
+        if self.with_attn:
+            fpn_outs = self.layer_attn(fpn_outs)
         feats = self.fpn_bottleneck(fpn_outs)
         return feats
 
